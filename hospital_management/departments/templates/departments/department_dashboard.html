@@ -1,0 +1,54 @@
+{% extends "core/base.html" %}
+
+{% block title %}{{ user.get_role_display }} Dashboard{% endblock %}
+
+{% block page_title %}{{ user.get_role_display }} Dashboard{% endblock %}
+
+{% block sidebar %}
+<li><a href="#">Pending Referrals</a></li>
+<li><a href="#">In-Progress Referrals</a></li>
+<li><a href="#">Completed Referrals</a></li>
+<li><a href="#">Messages</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h3>Incoming Referrals</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>From Doctor</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for referral in referrals %}
+            <tr>
+                <td>{{ referral.patient.name }}</td>
+                <td>{{ referral.from_doctor.username }}</td>
+                <td>{{ referral.get_status_display }}</td>
+                <td>{{ referral.created_at|date:"Y-m-d H:i" }}</td>
+                <td>
+                    <form action="{% url 'referrals:update_referral_status' referral.id %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <select name="status">
+                            <option value="pending" {% if referral.status == 'pending' %}selected{% endif %}>Pending</option>
+                            <option value="in_progress" {% if referral.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+                            <option value="done" {% if referral.status == 'done' %}selected{% endif %}>Done</option>
+                        </select>
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No referrals found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

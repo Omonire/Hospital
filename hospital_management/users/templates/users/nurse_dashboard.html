@@ -1,0 +1,24 @@
+{% extends "core/base.html" %}
+
+{% block title %}Nurse Dashboard{% endblock %}
+
+{% block page_title %}Nurse Dashboard{% endblock %}
+
+{% block sidebar %}
+<li><a href="#">Patient Admissions</a></li>
+<li><a href="#">Assigned Tasks</a></li>
+<li><a href="#">Messages</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="card-container">
+    <div class="card">
+        <h3>Patient Status</h3>
+        <p>Update and monitor patient statuses.</p>
+    </div>
+    <div class="card">
+        <h3>Pending Tasks</h3>
+        <p>View and manage tasks assigned by doctors.</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block page_title %}Admin Dashboard{% endblock %}
+
+{% block sidebar %}
+<li><a href="#">Overview</a></li>
+<li><a href="#">Manage Departments</a></li>
+<li><a href="#">Manage Personnel</a></li>
+<li><a href="#">System Logs</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="card-container">
+    <div class="card">
+        <h3>System Overview</h3>
+        <p>Monitor real-time system activity.</p>
+    </div>
+    <div class="card">
+        <h3>Activity Logs</h3>
+        <p>View logs of all actions taken in the system.</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+
+{% block title %}Doctor Dashboard{% endblock %}
+
+{% block page_title %}Doctor Dashboard{% endblock %}
+
+{% block sidebar %}
+<li><a href="#">Assigned Patients</a></li>
+<li><a href="#">Referrals</a></li>
+<li><a href="#">Messages</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="card-container">
+    <div class="card">
+        <h3>Assigned Patients</h3>
+        <p>View and manage patients assigned to you.</p>
+    </div>
+    <div class="card">
+        <h3>Create Referral</h3>
+        <p>Create a new referral for a patient to another department.</p>
+    <a href="{% url 'create_referral' %}">Create Now</a>
+    </div>
+</div>
+{% endblock %}

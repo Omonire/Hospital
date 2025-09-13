@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}
+
+{% block title %}Create Referral{% endblock %}
+
+{% block page_title %}Create a New Referral{% endblock %}
+
+{% block content %}
+<div class="card">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create Referral</button>
+    </form>
+</div>
+{% endblock %}

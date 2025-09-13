@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hospital Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h2>Hospital Management</h2>
+            <ul>
+                {% block sidebar %}
+                <!-- Sidebar links will go here -->
+                {% endblock %}
+            </ul>
+            <div class="logout">
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <header>
+                <h1>{% block page_title %}{% endblock %}</h1>
+            </header>
+            <main>
+                {% block content %}
+                <!-- Page content will go here -->
+                {% endblock %}
+            </main>
+        </div>
+
+        <div class="ai-assistant">
+            <h3>AI Assistant</h3>
+            <div class="messages">
+                <p><strong>AI:</strong> Welcome! How can I assist you today?</p>
+            </div>
+            <input type="text" placeholder="Ask the AI assistant...">
+        </div>
+    </div>
+    <script src="{% static 'core/js/main.js' %}"></script>
+</body>
+</html>
