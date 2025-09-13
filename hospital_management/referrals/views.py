@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from core.decorators import doctor_required
 from .forms import ReferralForm
 from .models import Referral
-from django.urls import reverse
 
 @login_required
 @doctor_required
@@ -14,7 +14,8 @@ def create_referral(request):
             referral = form.save(commit=False)
             referral.from_doctor = request.user
             referral.save()
-            return redirect('doctor_dashboard') # Or a success page
+            # Redirect to the doctor dashboard after creating a referral
+            return redirect('doctor_dashboard')
     else:
         form = ReferralForm()
     return render(request, 'referrals/create_referral.html', {'form': form})
@@ -23,8 +24,7 @@ def create_referral(request):
 def update_referral_status(request, referral_id):
     referral = get_object_or_404(Referral, id=referral_id)
 
-    # Security check: ensure the user belongs to the department
-    # the referral was sent to.
+    # Security check: ensure the user belongs to the department the referral was sent to.
     if request.user.department != referral.to_department:
         from django.core.exceptions import PermissionDenied
         raise PermissionDenied
@@ -42,11 +42,12 @@ def update_referral_status(request, referral_id):
         'lab': 'lab_dashboard',
         'cashier': 'cashier_dashboard',
     }
+
+    # Get the URL name for the user's role
     dashboard_url_name = role_dashboard_map.get(request.user.role)
 
-    # To redirect to a subdomain, we need to construct the full URL
-    host = request.get_host()
-    domain = "lvh.me:8000" if "lvh.me" in host else "hospital.com"
-    subdomain = request.user.role
-    scheme = request.scheme
-    return redirect(f"{scheme}://{subdomain}.{domain}/")
+    if dashboard_url_name:
+        return redirect(reverse(dashboard_url_name))
+    else:
+        # Fallback to the login page if the role has no dashboard
+        return redirect(reverse('login'))
